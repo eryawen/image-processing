@@ -30,21 +30,24 @@ imshow(L4);
 subplot(4,2,8);
 imhist(L4, n);
 
+%3
 H = imread('hist1.bmp');
 figure(2);
-subplot(1,2,1);
+subplot(1,5,1);
 imshow(H);
-subplot(1,2,2);
+title('Oryginał');
+subplot(1,5,2);
 imhist(H,n);
+title('Histogram');
 
 % Skalowanie, wykorzystujemy caly dostepny zakres
 HI = imadjust(H);
-figure(3);
-subplot(1,3,1);
+subplot(1,5,3);
 imshow(HI);
-subplot(1,3,2);
+title('Imadjust');
+subplot(1,5,4);
 imhist(HI,n);
-
+title('Histogram imadjust');
 
 %%%%% Histogram skumulowany - liczba pikseli o odcieniu od 0 do n-1
 
@@ -52,11 +55,12 @@ imhist(HI,n);
 C = cumsum(counts);
 
 mc = max(C);
-mh = max(counts)
+mh = max(counts);
 k = mc / mh;
 C2 = C / k; %skalowanie, żeby zmieściło się na wykresie
 
-subplot(1,3,3);
+subplot(1,5,5);
+title('Histogram skumulowany');
 hold on;
 plot(binLoc,counts);
 plot(binLoc,C2);
@@ -66,7 +70,7 @@ hold off;
 % Wyrównywanie histogramu - taka sama liczba pikseli reprezentowana przez
 % każdy poziom szarości, operacja LUT, funkcją przejścia jest histogram skumulowany
 
-figure(4);
+figure(3);
 
 mc2 = max(C2);
 k = mc2 / 255;
@@ -76,9 +80,11 @@ lut = uint8(C3);
 subplot(1,3,1)
 HE = intlut(H, lut);
 imshow(HE);
+title('Po wyrównaniu');
 
 subplot(1,3,2);
 imhist(HE,n);
+title('Histogram');
 
 subplot(1,3,3);
 [counts, binLoc] = imhist(HE,256);
@@ -90,17 +96,20 @@ k = mc / mh;
 C2 = C / k;
 
 subplot(1,3,3);
+title('Skumulowany');
 hold on;
 plot(binLoc,counts);
 plot(binLoc,C2);
 hold off;
 
-figure();
+figure(4);
+subplot(1,2,1);
 histeq(H, 256);
-figure();
+title('histeq');
+subplot(1,2,2);
 N = adapthisteq(H);
 imshow(N);
-
+title('adapthisteq');
 %%%%%
 
 printHist(imread('hist2.bmp'));
