@@ -30,7 +30,7 @@ for i = 1:X
         
         %9 Metoda Sauvol'i
         stdDev = stddevLT(i, j, W2, I, M, X, Y);
-        MS = M * (1 + k*(stdDev/R-1)); % +/-
+        MS = M * (1 - k*(stdDev/R-1)); % +/- zależy od tego czy mamy jasne/ciemne tło
         if I(i,j) < MS
             Ibw_s(i,j) = 0;
         else
